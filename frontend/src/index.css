@@ -1,0 +1,20 @@
+
+.player-block {
+    width: 25vh;
+    height: 25vh;
+    border: 2px solid black;
+    padding: 2vh;
+}
+
+.player-block:active {
+    opacity: 0.7;
+}
+
+.player-block img {
+    width: 15vh;
+    height: 15vh;
+}
+
+.player-block h1 {
+    font-size: 2vh;
+}
