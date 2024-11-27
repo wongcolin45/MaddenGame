@@ -1,11 +1,12 @@
-const Player = require("../Models/Player.js");
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+const {Player} = require('../Models/Index.js');
+
+const {getRandomInt} = require('../utils.js');
+
 
 async function getPlayer(name) {
     if (name == null) {
+        console.log('Name is null!')
         return null;
     }
     try {
@@ -16,34 +17,66 @@ async function getPlayer(name) {
         });
 
         if (data.length === 0) {
+            console.log('Player not found!');
             return null;
         }
         return data[0].dataValues;
     } catch (error) {
-        throw new Error('Error getting player!')
+        console.log('Error getting player!')
+        return null;
     }
 }
 
 async function getRandomPlayer() {
+    const id = getRandomInt(0, 1868);
     try {
-        const data = await Player.findAll();
-        const index= getRandomInt(0, data.length);
-        if (!data[index]) {
+        const data = await Player.findOne({
+            where: {
+                id: id
+            },
+            attributes: ['name', 'position', 'rating'],
+        });
+
+        if (!data) {
             return null;
         }
-        return data[index].dataValues;
+        return data.dataValues;
     } catch (error) {
         throw new Error('Error fetching random player!');
     }
 }
 
+async function getRandomPlayerAtPosition(position) {
+    try {
+        const data = await Player.findAll({
+            where: {
+                position: position,
+            },
+            attributes: ['name', 'position', 'rating'],
+        });
+        if (!data) {
+            return null;
+        }
 
+        const index = getRandomInt(0, data.length);
+        console.log('giving '+data[index]);
+        return data[index].dataValues;
+
+    } catch (error) {
+        throw new Error('Error fetching random player!');
+    }
+}
 
 async function test() {
-    const data = await getPlayer('Justin Jefferson');
+    const position = 'TE';
+    const data = await getRandomPlayerAtPosition(position);
     console.log(data);
 }
 
-test();
+//test();
 
-module.exports = {getPlayer, getRandomPlayer};
+module.exports = {
+    getPlayer,
+    getRandomPlayer,
+    getRandomPlayerAtPosition,
+};

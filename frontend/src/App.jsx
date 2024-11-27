@@ -1,9 +1,10 @@
-import PlayerBlock from "./Components/PlayerBlock.jsx";
+import GuessPlayerRating from "./Components/GuessPlayerRating.jsx";
+
 
 function App() {
     return (
         <>
-            <PlayerBlock/>
+            <GuessPlayerRating/>
         </>
     )
 }

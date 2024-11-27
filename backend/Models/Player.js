@@ -38,7 +38,6 @@ Player.init(
                 key: 'id'
             }
         }
-        
     },
     { sequelize, tableName: 'Players', timestamps: false}
 )
